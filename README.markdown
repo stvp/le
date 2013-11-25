@@ -6,7 +6,7 @@ background and handles automatically re-connecting, as needed.
 Connection errors are logged to stderr.
 
 **Security note:** Currently, `le` should only be used on trusted networks. It
-uses Logentries' un-encrypted port (10000).
+does not yet use TLS. (Pull requests welcome.)
 
 ## Documentation
 
