@@ -46,7 +46,9 @@ func (w *Writer) Write(p []byte) (n int, err error) {
 		return 0, fmt.Errorf("Buffer is full")
 	}
 
-	w.channel <- p
+	buf := make([]byte, len(p))
+	copy(buf, p)
+	w.channel <- buf
 	w.waitGroup.Add(1)
 
 	return len(p), nil
