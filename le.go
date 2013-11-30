@@ -48,8 +48,8 @@ func (w *Writer) Write(p []byte) (n int, err error) {
 
 	buf := make([]byte, len(p))
 	copy(buf, p)
-	w.channel <- buf
 	w.waitGroup.Add(1)
+	w.channel <- buf
 
 	return len(p), nil
 }
