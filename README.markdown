@@ -1,12 +1,7 @@
 # le
 
-le is a simple Logentries writer for Go that sends logs asynchronously in the
-background and handles automatically re-connecting, as needed.
-
-Connection errors are logged to stderr.
-
-**Security note:** Currently, `le` should only be used on trusted networks. It
-does not yet use TLS. (Pull requests welcome.)
+le is a [logentries](https://logentries.com) writer for Go that sends logs
+asynchronously. All connection errors are logged to stderr.
 
 ## Documentation
 
@@ -37,4 +32,8 @@ func main() {
   logger.Wait() // Wait for queued logs to be sent
 }
 ```
+
+## Development
+
+    TOKEN=<testing_token_here> go test
 

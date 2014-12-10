@@ -2,6 +2,7 @@ package le
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"net"
 	"os"
@@ -10,11 +11,12 @@ import (
 )
 
 const (
-	LOGENTRIES_ADDRESS = "data.logentries.com:10000"
+	LOGENTRIES_ADDRESS = "data.logentries.com:20000"
 )
 
 type Writer struct {
 	Token     string
+	Dialer    net.Dialer
 	conn      net.Conn
 	channel   chan []byte
 	waitGroup sync.WaitGroup
@@ -26,7 +28,11 @@ type Writer struct {
 // the Writer begins rejecting new writes.
 func New(token string, buffer int) (w *Writer, err error) {
 	w = &Writer{
-		Token:   token,
+		Token: token,
+		Dialer: net.Dialer{
+			Timeout:   2 * time.Second,
+			KeepAlive: time.Minute,
+		},
 		channel: make(chan []byte, buffer),
 	}
 
@@ -74,7 +80,10 @@ func (w *Writer) connect() (err error) {
 		w.conn = nil
 	}
 
-	w.conn, err = net.DialTimeout("tcp", LOGENTRIES_ADDRESS, time.Second)
+	config := tls.Config{}
+
+	w.conn, err = tls.DialWithDialer(&w.Dialer, "tcp", LOGENTRIES_ADDRESS, &config)
+
 	return err
 }
 
