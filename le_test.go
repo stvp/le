@@ -6,11 +6,8 @@ import (
 )
 
 func TestWrite(t *testing.T) {
-	writer, err := New(os.Getenv("TOKEN"), 100)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = writer.Write([]byte("Testing\nA\nB\nC"))
+	writer := NewWriter(os.Getenv("TOKEN"))
+	_, err := writer.Write([]byte("Testing\nA\nB\nC"))
 	if err != nil {
 		t.Error(err)
 	}
@@ -18,6 +15,4 @@ func TestWrite(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
-	writer.Wait()
 }
