@@ -13,8 +13,8 @@ var (
 	newlines = []byte{'\n'}
 )
 
-// Writer implements the io.Writer interface for sending token-based logs to
-// Logentries.
+// Writer implements the io.WriteCloser interface for sending token-based logs
+// to Logentries.
 type Writer struct {
 	Token string
 	conn  net.Conn
