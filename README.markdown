@@ -1,8 +1,7 @@
 # le
 
 `le` is a Go package that provides a basic goroutine-safe `io.Writer` interface
-for sending logs to Logentries. It should only be used in AWS us-east-1 because
-it does not use TLS.
+for sending logs to Logentries using basic Token TCP auth (*no TLS*).
 
 ## Documentation
 
